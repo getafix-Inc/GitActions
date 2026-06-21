@@ -1,0 +1,15 @@
+name: ManualTriggerHostedWF
+
+on: workflow_dispatch
+
+jobs:
+  init-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print greeting
+        run: |
+          echo "Hello World"
+          echo "wonderful sunny morning"
+          echo "Write each of your statements in insgle line"
+      - name: print goodbye
+        run: echo "Good Bye!!"
