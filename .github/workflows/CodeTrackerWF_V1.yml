@@ -1,0 +1,22 @@
+name: CodeTrackerWF_V1
+
+on: [push]
+
+jobs:
+  list-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Install NodeJs
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+
+      - name: List all commit SHAs
+        run: |
+          # Lists all commit hashes in the current branch history
+          # Newest first, oldest last
+          git log --format="%H"
