@@ -1,0 +1,19 @@
+name: Commits_In_Current_Push
+
+on: [push]
+
+jobs:
+  list-commits:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      
+      - name: List commit SHAs in current push
+        shell: bash
+        run: |
+          # Use jq to extract the 'id' field from the 'commits' array in the event payload
+          echo "Commits in this push:"
+          echo '${{ toJSON(github.event.commits) }}' | jq -r '.[].id'
