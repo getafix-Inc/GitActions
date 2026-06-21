@@ -1,4 +1,4 @@
-name: ManualTriggerHostedWF
+name: ManualTriggerHostedWFMultiline
 
 on: workflow_dispatch
 
