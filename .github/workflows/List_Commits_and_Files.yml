@@ -1,0 +1,30 @@
+name: List Commits and Files
+
+on: [push]
+
+jobs:
+  list-changes:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Code
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      
+      - name: List commits and changed files
+        shell: bash
+        run: |
+          # 1. Get the list of commit SHAs in the push
+          commits=$(echo '${{ toJSON(github.event.commits) }}' | jq -r '.[].id')
+          
+          echo "Commits in this push and their modified files:"
+          
+          for sha in $commits; do
+            echo "-----------------------------------"
+            echo "Commit: $sha"
+            # 2. Use git to list files changed in this specific commit
+            # --name-only: lists files
+            # --no-commit-id: omits the commit hash from output
+            # -r: recursive
+            git diff-tree --no-commit-id --name-only -r "$sha"
+          done
